@@ -2,11 +2,13 @@ import React, { useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { PostsContext } from '../context/PostsContext'
 import api from '../api'; 
+import { apiGetPosts, apiDeletePost } from "../api";
+
 
 
 export default function PostList() {
-  // ✅ Only pull what you need from context
-  const { apideletePost } = useContext(PostsContext)
+  // Only pull what you need from context
+ 
 
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -21,7 +23,7 @@ export default function PostList() {
   const [total, setTotal] = useState(0)
   const [pages, setPages] = useState(1)
 
-  // ✅ Fetch categories
+  //  Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -35,7 +37,7 @@ export default function PostList() {
     fetchCategories()
   }, [api])
 
-  // ✅ Fetch posts
+  //  Fetch posts
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true)
@@ -62,11 +64,11 @@ export default function PostList() {
     fetchPosts()
   }, [page, limit, q, categoryFilter, api])
 
-  const handleDelete = async (id) => {
+ const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this post?')) return
     try {
       setDeleting(id)
-      await deletePost(id)
+      await apiDeletePost(id)
       setPosts(prev => prev.filter(post => post._id !== id))
     } catch (err) {
       console.error(err)
@@ -75,6 +77,7 @@ export default function PostList() {
       setDeleting(null)
     }
   }
+
 
   if (loading) return <div className="text-center text-gray-500 mt-10">Loading posts...</div>
   if (error) return <div className="text-center text-red-600 mt-10">Error: {error}</div>

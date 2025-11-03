@@ -1,13 +1,9 @@
 const Post = require('../models/Post');
 
-//  Get all posts
+// Get all posts
 exports.getAllPosts = async (req, res, next) => {
   try {
-    const posts = await Post.find()
-      .populate('category', 'name')
-      .sort({ createdAt: -1 });
-
-    // Return consistent structure for frontend
+    const posts = await Post.find().sort({ createdAt: -1 }); // 🧹 removed .populate()
     res.json({
       data: posts,
       total: posts.length,
@@ -17,16 +13,18 @@ exports.getAllPosts = async (req, res, next) => {
     next(err);
   }
 };
-//  Get single post
+
+// Get single post
 exports.getPostById = async (req, res, next) => {
   try {
-    const post = await Post.findById(req.params.id).populate('category', 'name');
+    const post = await Post.findById(req.params.id); // 🧹 removed .populate()
     if (!post) return res.status(404).json({ message: 'Post not found' });
     res.json(post);
   } catch (err) {
     next(err);
   }
 };
+
 
 //  Create post
 exports.createPost = async (req, res, next) => {

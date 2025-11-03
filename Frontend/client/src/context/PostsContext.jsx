@@ -21,6 +21,9 @@ export function PostsProvider({ children }) {
       setLoading(false)
     }
   }, [])
+  
+
+
 
   // 🔹 Fetch categories
   const fetchCategories = useCallback(async () => {
@@ -81,6 +84,7 @@ export function PostsProvider({ children }) {
         updatePost,
         deletePost,
         fetchPosts,
+        api,
       }}
     >
       {children}

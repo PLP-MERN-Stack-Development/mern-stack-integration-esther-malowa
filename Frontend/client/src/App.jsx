@@ -7,6 +7,7 @@ import PostForm from './components/PostForm';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import EditPost from './components/EditPost';
 
 export default function App() {
   return (
@@ -14,9 +15,10 @@ export default function App() {
       {/* Public layout-wrapped routes */}
       <Route element={<Layout />}>
         <Route path="/" element={<PostList />} />
+        <Route path="/posts" element={<PostList />} />   {/* ✅ Added this */}
         <Route path="/posts/:id" element={<PostView />} />
 
-        {/* Protected route for creating/editing */}
+        {/* Protected routes for creating/editing */}
         <Route
           path="/posts/new"
           element={
@@ -26,10 +28,10 @@ export default function App() {
           }
         />
         <Route
-          path="/posts/:id/edit"
+          path="/posts/edit/:id"
           element={
             <ProtectedRoute>
-              <PostForm editMode />
+              <EditPost />
             </ProtectedRoute>
           }
         />

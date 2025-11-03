@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { PostsContext } from '../context/PostsContext'
 import { AuthContext } from '../context/AuthContext'
 import api from "../api.js"
 
-export default function PostForm({ editMode = false }) {
-  const { id } = useParams()
+export default function PostForm() {
+  
   const navigate = useNavigate()
   const { createPost, updatePost } = useContext(PostsContext)
   const { token } = useContext(AuthContext)
@@ -34,23 +34,7 @@ export default function PostForm({ editMode = false }) {
       .catch(() => setCategories([]))
   }, [])
 
-  // Load existing post if editing
-  useEffect(() => {
-    if (editMode && id) {
-      setLoading(true)
-      api.get(`/posts/${id}`)
-        .then(res => {
-          setForm({
-            ...res.data,
-            tags: res.data.tags?.join(', ') || '',
-            category: res.data.category?._id || res.data.category || '',
-          })
-          setFeaturedImageUrl(res.data.featuredImage || '')
-        })
-        .catch(err => setError(err.message))
-        .finally(() => setLoading(false))
-    }
-  }, [editMode, id])
+  
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target
@@ -93,10 +77,9 @@ export default function PostForm({ editMode = false }) {
         tags: form.tags.split(',').map(t => t.trim()).filter(Boolean)
       }
 
-      if (editMode) await updatePost(id, payload)
-      else await createPost(payload)
+     await createPost(payload)
+     setSuccess('Post created successfully!')
 
-      setSuccess(editMode ? 'Post updated successfully!' : 'Post created successfully!')
       setTimeout(() => navigate('/'), 1000)
     } catch (err) {
       setError(err.message || 'Something went wrong')
@@ -109,7 +92,7 @@ export default function PostForm({ editMode = false }) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold mb-6 text-indigo-700">
-        {editMode ? 'Edit Post' : 'Create New Post'}
+    
       </h1>
 
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -164,20 +147,19 @@ export default function PostForm({ editMode = false }) {
         </div>
 
         {/* Category */}
-        <div>
-  <label className="block text-sm font-semibold text-gray-700">Category</label>
-  <select
+       <div>
+  <label className="block mb-1 font-semibold">Category</label>
+  <input
+    type="text"
     name="category"
     value={form.category}
     onChange={handleChange}
     className="w-full border rounded px-3 py-2"
-  >
-    <option value="">Select category</option>
-    <option value="technology">Technology</option>
-    <option value="lifestyle">Lifestyle</option>
-    <option value="education">Education</option>
-  </select>
+    placeholder="Enter category (e.g. Web Development)"
+    required
+  />
 </div>
+
         {/* Tags */}
         <div>
           <label className="block text-sm font-semibold text-gray-700">Tags (comma-separated)</label>
@@ -216,7 +198,7 @@ export default function PostForm({ editMode = false }) {
           disabled={loading || uploading}
           className="px-5 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition"
         >
-          {loading ? 'Saving...' : editMode ? 'Update Post' : 'Create Post'}
+          
         </button>
 
         {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
