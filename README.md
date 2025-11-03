@@ -75,4 +75,105 @@ Your work will be automatically submitted when you push to your GitHub Classroom
 - [Express.js Documentation](https://expressjs.com/)
 - [React Documentation](https://react.dev/)
 - [Node.js Documentation](https://nodejs.org/en/docs/)
-- [Mongoose Documentation](https://mongoosejs.com/docs/) 
+- [Mongoose Documentation](https://mongoosejs.com/docs/)
+
+
+---
+
+# 📝 Student Implementation - BlogPost Application
+
+## 📖 Project Overview
+The **BlogPost App** is a full-stack MERN application that allows users to create, edit, view, and delete blog posts. It supports image uploads, comments, and category tagging.  
+This project demonstrates seamless integration between the **React frontend** and **Express + MongoDB backend**.
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the Repository
+```bash
+git clone <your-repo-link>
+cd mern-blog
+### 2. Install Dependencies
+
+For backend:
+
+cd server
+npm install
+
+
+For frontend:
+
+cd client
+npm install
+
+### 3. Environment Variables
+
+Create a .env file in the server folder with the following:
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/blog_api_db
+JWT_SECRET=your_secret_key
+
+### 4. Run the Application
+# Start backend
+cd server
+npm start
+
+# Start frontend (in another terminal)
+cd client
+npm run dev
+
+## API Documentation
+Base URL
+http://localhost:5000/api
+
+## Endpoints
+### Method	Endpoint	Description
+GET	/posts	Get all posts
+GET	/posts/:id	Get a single post
+POST	/posts	Create a new post (requires auth)
+PUT	/posts/:id	Update a post (requires auth)
+DELETE	/posts/:id	Delete a post (requires auth)
+POST	/posts/:id/comments	Add a comment
+GET	/posts/:id/comments	Get comments for a post
+
+##  Features Implemented
+
+User authentication (JWT)
+
+Create, read, update, delete (CRUD) posts
+
+Image upload using Multer
+
+Comment system
+
+Responsive front-end with React + Tailwind CSS
+
+Dynamic routing for post view
+
+Category filtering (supports default “Uncategorized”)
+
+🖼️ Screenshots
+🏠 Homepage
+
+📰 Post View
+
+✍️ Create Post
+
+🧩 Technologies Used
+
+Frontend: React.js, Tailwind CSS, Axios, React Router
+
+Backend: Node.js, Express.js, Multer, Joi Validation
+
+Database: MongoDB with Mongoose
+
+Authentication: JWT (JSON Web Token)
+
+🧠 Author
+
+Esther Ooko
+Frontend & Backend Developer
+📧 malowaesther11@gmail.com
+
+📅 2025
